@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" /> -->
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>MARVisT: Authoring Glyph-based Visualization in Mobile Augmented Reality</title>
+    <link rel="stylesheet" href="styles/default.css">
+    <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+</head>
+
+<body>
+    <div class="teaser">
+        <img src="./figs/bg.png" />
+        <div class="mask"></div>
+        <div class="teaser-content">
+            <h1>MARVisT: Authoring Glyph-based Visualization in Mobile Augmented Reality
+            </h1>
+            <div class="authors">
+                <span>
+                    <a href="//chenzhutian.org" target="_blank">Zhutian Chen</a>, 
+                    Yijia Su, 
+                    <a href="//wangyifang.top/" target="_blank">Yifang Wang</a>, 
+                    <a href="//huamin.org" target="_blank">Huamin Qu</a>,
+                    and <a href="//www.ycwu.org/" target="_blank">Yingcai Wu</a>
+                </span>
+                <span>
+                    <a href="//ieeevis.org/year/2019/info/papers-sessions" target="_blank">IEEE TVCG (VIS) 2019</a>
+                </span>
+            </div>
+            <div class="jump-btn-group">
+                <a href="//chenzhutian.org/projects/2018_marvist/paper.pdf" class="jump-btn"
+                    target="_blank">Paper</a>
+                <a href="#scenario" class="jump-btn">Video</a>
+                <a href="#design" class="jump-btn">Design</a>
+                <a href="#examples" class="jump-btn">Examples</a>
+                <a href="//chenzhutian.org/projects/2018_marvist/appendix.pdf" target="_blank" class="jump-btn">Suppl. Materials</a>
+            </div>
+        </div>
+    </div>
+    <div class="content" style="width:80vw;max-width: 1024px;">
+        
+        <section id="abstract" class="abstract">
+            <h2>Abstract</h2>
+            Recent advances in mobile augmented reality (AR) techniques have shed new light on personal visualization for their
+            advantages of fitting visualization within personal routines, situating visualization in a real-world context, and arousing users’ interests.
+            However, enabling non-experts to create data visualization in mobile AR environments is challenging given the lack of tools that allow
+            in-situ design while supporting the binding of data to AR content. Most existing AR authoring tools require working on personal computers
+            or manually creating each virtual object and modifying its visual attributes. We systematically study this issue by identifying the specificity
+            of AR glyph-based visualization authoring tool and distill four design considerations. Following these design considerations, we design
+            and implement MARVisT, a mobile authoring tool that leverages information from reality to assist non-experts in addressing relationships
+            between data and virtual glyphs, real objects and virtual glyphs, and real objects and data. With MARVisT, users without visualization
+            expertise can bind data to real-world objects to create expressive AR glyph-based visualizations rapidly and effortlessly, reshaping the
+            representation of the real world with data. We use several examples to demonstrate the expressiveness of MARVisT. A user study with
+            non-experts is also conducted to evaluate the authoring experience of MARVisT.
+        </section>
+        <hr />
+
+        <section id="scenario" class="scenario">
+            <h2>Video & Usage Scenario</h2>
+
+            <video style="text-align: center;
+            width: 100%;
+            margin: 0 auto 20px auto;" controls>
+            <source src="//chenzhutian.org/projects/2018_marvist/video.mp4" type="video/mp4">
+            </video>
+            <p>To demonstrate the basic workflow of MARVisT, we describe how Bob, a hypothetical travel and history enthusiast, create an AR glyph-based infographic in a mesume.</p>
+
+
+            <figure style="text-align: center;
+            width: 100%;
+            margin: 0 auto 20px auto;">
+                <img src="figs/usage-scenario.jpg" alt='missing' />
+                <figcaption> Figure 5. a) The UI for mapping data points to virtual glyphs. b) The UI for visual mapping. The height of hotels and money stacks represents the cost.
+                    The color of houses denotes the rank of hotels. Users can further switch different interaction modes using the buttons in the bottom-right corner. c)
+                    The ARGVis blends the designer’s routes (shoes), hotels (houses), and daily expenses (money stacks) data with a real-world infographic map. d) The
+                    Layout Sketch allows users to lay out numerous objects efficiently. e) The Copy Layout method objectifies layouts of collections as small beads.</figcaption>
+            </figure>
+
+        </section>
+        <hr />
+
+        <section id="design" class="design">
+            <h2>Design of MARVisT</h2>
+
+            <h3>1. Basic pipeline and interactions.</h3>
+
+            <p>To incorporate <strong>DC1.</strong> Balance the Expressivity and Simplicity, we design <strong>F1.</strong> a pipeline based on a bottom-up construction strategy and a set of intuitive interactions.</p>
+
+            <figure style="text-align: center;
+            width: 100%;
+            margin: 0 auto 20px auto;">
+                <img src="figs/41-pipeline.jpg" alt='missing' />
+                <figcaption> Figure 6. <strong>A basic pipeline to create glyph-based visualizations.</strong> a) Specifying the mapping from data points to virtual
+                    glyphs. b) Creating visual mappings through direct manipulations. c) Modifying the scale of visual mappings through one hand operations. d) Laying
+                    out virtual glyphs through intuitive and effective interactions.</figcaption>
+            </figure>
+
+            <br />
+            <figure style="text-align: center;
+            width: 100%;
+            margin: 0 auto 20px auto;">
+                <img src="figs/40-interaction.jpg" alt='missing' />
+                <figcaption> Figure 7. 
+                    <strong>MARVisT provides intuitive interactions</strong> that allow users to
+                    a) - e) directly manipulate the data bindings through one-hand operations
+                    and f) - j) lay out single or multiple virtual glyphs in both 2D and 3D space efficiently..</figcaption>
+            </figure>
+
+            <h3>2. Three advanced features to leverage for the three relationships between reality and virtuality.</h3>
+            <br />
+            <figure style="text-align: center;
+            width: 60%;
+            margin: 0 auto 20px auto;">
+                <img src="figs/40-connection.png" alt='missing' />
+                <figcaption> Figure 4. The relationship between reality and virtuality can be a) weak, b)
+                        medium, and c) strong.</figcaption>
+            </figure>
+
+            <br />
+            <div class="three">
+                    <figure style="flex:1.25; margin: 0 10px 20px 10px;">
+                        <figcaption style="text-align: center; font-size: 1.6rem;">Weak</figcaption>
+                        
+                        <img src="figs/re-weak.jpg" alt='missing' />
+                        <figcaption style="margin-bottom: 2rem;"> In the <strong>Weak relationship</strong>, the reality only provides a situation background and does not interact with the virtuality directly.</figcaption>
+                        
+                        <figcaption style="margin-bottom: 1rem;"><strong>DC2.</strong> Aid Visual Mapping with Context Information.</figcaption>
+
+                        <figcaption><strong>F2.</strong> Context-aware Nudging.</figcaption>
+
+
+                    </figure>
+
+                    <figure style="flex:1.26; margin: 0 10px 20px 10px;">
+                        <figcaption style="text-align: center; font-size: 1.6rem;">Medium</figcaption>
+                        <img src="figs/re-medium.jpg" alt='missing' />
+                        <figcaption style="margin-bottom: 1rem;"> In the <strong>Medium Relationship</strong>, real objects, which serve as references, such as the container or the anchor, are visually related to the 3D virtual glyphs</figcaption>
+
+                        <figcaption style="margin-bottom: 1rem;"><strong>DC3.</strong> Enable Visual Scale Synchronization between Real
+                                Objects and Virtual Glyphs.</figcaption>
+
+                        <figcaption><strong>F3.</strong> Visual Scales Synchronization.</figcaption>
+                    </figure>
+
+                    <figure style="flex:1.275; margin: 0 10px 20px 10px;">
+                        <figcaption style="text-align: center; font-size: 1.6rem;">Strong</figcaption>
+                        <img src="figs/re-strong.jpg" alt='missing' />
+
+                        <figcaption style="margin-bottom: 2rem;">In the <strong>Strong Relationship</strong>, real objects are associated with the data (represented by 3D glyphs) as physical referents.</figcaption>
+
+                        <figcaption style="margin-bottom: 2rem;"><strong>DC4.</strong> Support Auto-layout of Virtual Glyphs.</figcaption>
+
+                        <figcaption><strong>F4.</strong> Virtual Glyphs Auto-layout</figcaption>
+                    </figure>
+            </div>
+
+        </section>
+        <hr />
+
+        <section id="examples" class="examples">
+            <h2>Examples</h2>
+
+            <figure style="text-align: center;
+            width: 100%;
+            margin: 0 auto 20px auto;">
+                <img src="figs/50-examples.jpg" alt='missing' />
+                <figcaption> Figure 10.  Examples created with MARVisT. 
+                    a) An isotype chart combines the reality (the sketching on the whiteboard) and the virtual glyphs (the eight mobile phones). The four mobile phones in the second row visualize their price using the size channel. 
+                    b) Michael Knuepfel’s keyboard frequency sculpture recreated and enhanced using MARVisT. Both the color and height channels are used for double encoding. 
+                    c) Moodley brand identity’s physical infographics recreated by MARVisT using color and height to encode various data attributes. 
+                    d) A smiling face created using the Layout Sketch method. The face consists of fruits the designer eat in a week. 
+                    e) A calendar visualization created using the auto-layout method. The design displays the sleep duration per night in the March 2018 using the color and opacity for double encoding. 
+                    f) A stacked glyph chart created using the Layout Brush and the automatically stacking function. It depicts the designer’s favorite seat in the library. Color represents the day of the week.
+                </figcaption>
+            </figure>
+
+        </section>
+
+    </div>
+
+    <script>
+
+        function convertReference() {
+            const cites = document.querySelectorAll('cite')
+            let id = 1
+            const orderBook = {}
+            cites.forEach(c => {
+                if (!(c.textContent in orderBook)) {
+                    orderBook[c.textContent] = id++
+                }
+            })
+            cites.forEach(c => {
+                const refId = c.textContent
+                c.textContent = ''
+                c.insertAdjacentHTML('beforeend', `<a href="#${refId}">[${orderBook[refId]}]</a>`)
+            })
+
+            // reorder
+            const ps = Array.from(document.querySelectorAll('#references > p'))
+            ps.forEach(p => {
+                p.innerHTML = `[${orderBook[p.id]}] ${p.innerHTML}`
+                p.parentElement.removeChild(p)
+            })
+            const parent = document.querySelector('#references')
+            ps.filter(p => orderBook[p.id])
+                .sort((a, b) => orderBook[a.id] - orderBook[b.id])
+                .forEach(p => parent.appendChild(p))
+        }
+
+        function parseCollapsible() {
+            const coll = document.getElementsByClassName("collapsible");
+
+            for (let i = 0; i < coll.length; i++) {
+
+                coll[i].addEventListener("click", function () {
+                    this.classList.toggle("active");
+                    const content = this.nextElementSibling;
+                    if (content.style.maxHeight){
+                        content.style.maxHeight = null;
+                    } else {
+                        content.style.maxHeight = content.scrollHeight + "px";
+                    }
+                });
+            }
+        }
+
+
+        // reference
+        convertReference()
+
+        // collapsible
+        parseCollapsible()
+
+    </script>
+</body>
+
+</html>
